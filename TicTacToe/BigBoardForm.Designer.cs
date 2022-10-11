@@ -487,6 +487,7 @@ namespace TicTacToe
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BigBoardForm";
             this.Text = "BigBoardForm";
+            this.Activated += new System.EventHandler(this.BigBoardForm_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 

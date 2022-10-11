@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static TicTacToe.GameLogic;
@@ -15,7 +14,9 @@ namespace TicTacToe
     public partial class BigBoardForm : Form
     {
         //какой игрок/бот ходит
-        public int currentPlayerMove = 1;
+        public int currentPlayerMove;
+        int moveCounter = 0;
+        Random random = new Random();
 
         public BigBoardForm()
         {
@@ -77,15 +78,22 @@ namespace TicTacToe
         {
             if (currentGameType == gameTypes["playerVsBot"])
             {
-                if (currentPlayerMove == 1)
+                if (currentPlayerMove == 2)
                 {
-                    position.Text = "X";
-                    currentPlayerMove = 2;
+                    position.Text = "O";
+                    IsOver();
+                    BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
+                    IsOver();
                 }
                 else
                 {
-                    BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
-                    currentPlayerMove = 1;
+                    position.Text = "X";
+                    IsOver();
+                    if (moveCounter++ < 12)
+                    {
+                        BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                        IsOver();
+                    }
                 }
             }
             else if (currentGameType == gameTypes["playerVsPlayer"])
@@ -93,43 +101,15 @@ namespace TicTacToe
                 if (currentPlayerMove == 1)
                 {
                     position.Text = "X";
+                    IsOver();
                     currentPlayerMove = 2;
                 }
                 else
                 {
                     position.Text = "O";
+                    IsOver();
                     currentPlayerMove = 1;
                 }
-            }
-            else
-            {
-                if (currentPlayerMove == 1)
-                {
-                    Thread.Sleep(1500);
-                    BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
-                    currentPlayerMove = 2;
-                }
-                else
-                {
-                    Thread.Sleep(1500);
-                    BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
-                    currentPlayerMove = 1;
-                }
-            }
-
-
-            byte res = IsGameEnded(getGameBoard());
-            if (res != 100)
-            {
-                if (res == 1 || res == 2)
-                {
-
-                    var winner = res == 2 ? "\"ноликов\"!" : "\"крестиков\"!";
-                    MessageBox.Show($"Победа {winner}");
-                }
-                else if (res == 0)
-                    MessageBox.Show("Ничья!");
-                this.Close();
             }
         }
 
@@ -172,6 +152,24 @@ namespace TicTacToe
             else if (text == "O")
                 num = 2;
             return num;
+        }
+
+        public bool IsOver()
+        {
+            byte res = IsGameEnded(getGameBoard());
+            if (res != 100)
+            {
+                if (res == 1 || res == 2)
+                {
+
+                    var winner = res == 2 ? "\"ноликов\"!" : "\"крестиков\"!";
+                    MessageBox.Show($"Победа {winner}");
+                }
+                else if (res == 0)
+                    MessageBox.Show("Ничья!");
+                this.Close();
+            }
+            return false;
         }
 
         private void BotMakeMove(byte[] pos, string Symbol)
@@ -278,6 +276,27 @@ namespace TicTacToe
                             break;
                     }
                     break;
+            }
+        }
+
+        private void BigBoardForm_Activated(object sender, EventArgs e)
+        {
+            Task.Delay(random.Next(1000)).GetAwaiter().GetResult();
+            if (currentPlayerMove == 2 && gameTypes["playerVsBot"] == currentGameType)
+            {
+                BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
+            }
+            else if (gameTypes["botVsBot"] == currentGameType)
+            {
+                while (moveCounter++ < 13)
+                {
+                    Task.Delay(random.Next(500, 1000)).GetAwaiter().GetResult();
+                    BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
+                    IsOver();
+                    Task.Delay(random.Next(500, 1000)).GetAwaiter().GetResult();
+                    BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                    IsOver();
+                }
             }
         }
     }

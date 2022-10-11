@@ -177,8 +177,198 @@ namespace TicTacToe
 
         private static int[,] CalculateRateBig(byte[,] gameBoard, byte currSymbol)
         {
-            var rate = new int[5, 5];
+            byte oppositeSymbol = (byte)(currSymbol == 1 ? 2 : 1);
 
+            var rate = new int[,] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
+            for (int i = 0; i < 5; i++)
+            {
+                var currRow = GetRow(gameBoard, i);
+                for (int k = 0; k < 5; k++)
+                {
+                    //проверка на пустоту поля
+                    if (gameBoard[i, k] == 0)
+                        rate[i, k] += 1;
+                    else
+                        continue;
+
+
+                    if (currRow.Contains(currSymbol))
+                    {
+                        switch (currRow.Where(x => x.Equals(currSymbol)).Count())
+                        {
+                            case 1:
+                                rate[i, k] += 100;
+                                break;
+                            case 2:
+                                rate[i, k] += 1000;
+                                break;
+                            case 3:
+                                rate[i, k] += 10000;
+                                break;
+                            case 4:
+                                rate[i, k] += 500000;
+                                break;
+                        }
+                    }
+
+                    if (currRow.Contains(oppositeSymbol))
+                    {
+                        switch (currRow.Where(x => x.Equals(oppositeSymbol)).Count())
+                        {
+                            case 1:
+                                rate[i, k] += 500;
+                                break;
+                            case 2:
+                                rate[i, k] += 5000;
+                                break;
+                            case 3:
+                                rate[i, k] += 50000;
+                                break;
+                            case 4:
+                                rate[i, k] += 100000;
+                                break;
+                        }
+                    }
+
+                    if (GetColumn(gameBoard, k).Contains(currSymbol))
+                    {
+                        switch (GetColumn(gameBoard, k).Where(x => x.Equals(currSymbol)).Count())
+                        {
+                            case 1:
+                                rate[i, k] += 100;
+                                break;
+                            case 2:
+                                rate[i, k] += 1000;
+                                break;
+                            case 3:
+                                rate[i, k] += 10000;
+                                break;
+                            case 4:
+                                rate[i, k] += 500000;
+                                break;
+                        }
+                    }
+
+                    if (GetColumn(gameBoard, k).Contains(oppositeSymbol))
+                    {
+                        switch (GetColumn(gameBoard, k).Where(x => x.Equals(oppositeSymbol)).Count())
+                        {
+                            case 1:
+                                rate[i, k] += 500;
+                                break;
+                            case 2:
+                                rate[i, k] += 5000;
+                                break;
+                            case 3:
+                                rate[i, k] += 50000;
+                                break;
+                            case 4:
+                                rate[i, k] += 100000;
+                                break;
+                        }
+                    }
+
+
+
+                    if (bigDiagonalPos[i] == k)
+                    {
+                        var bigDiagonalList = new List<byte>();
+                        bigDiagonalList.Add(gameBoard[0, bigDiagonalPos[0]]);
+                        bigDiagonalList.Add(gameBoard[1, bigDiagonalPos[1]]);
+                        bigDiagonalList.Add(gameBoard[2, bigDiagonalPos[2]]);
+                        bigDiagonalList.Add(gameBoard[3, bigDiagonalPos[3]]);
+                        bigDiagonalList.Add(gameBoard[4, bigDiagonalPos[4]]);
+
+                        if (bigDiagonalList.Contains(currSymbol))
+                        {
+                            switch (bigDiagonalList.Where(x => x.Equals(currSymbol)).Count())
+                            {
+                                case 1:
+                                    rate[i, k] += 100;
+                                    break;
+                                case 2:
+                                    rate[i, k] += 1000;
+                                    break;
+                                case 3:
+                                    rate[i, k] += 10000;
+                                    break;
+                                case 4:
+                                    rate[i, k] += 500000;
+                                    break;
+                            }
+                        }
+
+                        if (bigDiagonalList.Contains(oppositeSymbol))
+                        {
+                            switch (bigDiagonalList.Where(x => x.Equals(oppositeSymbol)).Count())
+                            {
+                                case 1:
+                                    rate[i, k] += 500;
+                                    break;
+                                case 2:
+                                    rate[i, k] += 5000;
+                                    break;
+                                case 3:
+                                    rate[i, k] += 50000;
+                                    break;
+                                case 4:
+                                    rate[i, k] += 100000;
+                                    break;
+                            }
+                        }
+                        rate[i, k] += 1;
+                    }
+
+                    if (bigDiagonalNeg[i] == k)
+                    {
+                        var bigDiagonalList = new List<byte>();
+                        bigDiagonalList.Add(gameBoard[0, bigDiagonalNeg[0]]);
+                        bigDiagonalList.Add(gameBoard[1, bigDiagonalNeg[1]]);
+                        bigDiagonalList.Add(gameBoard[2, bigDiagonalNeg[2]]);
+                        bigDiagonalList.Add(gameBoard[3, bigDiagonalNeg[3]]);
+                        bigDiagonalList.Add(gameBoard[4, bigDiagonalNeg[4]]);
+
+                        if (bigDiagonalList.Contains(currSymbol))
+                        {
+                            switch (bigDiagonalList.Where(x => x.Equals(currSymbol)).Count())
+                            {
+                                case 1:
+                                    rate[i, k] += 100;
+                                    break;
+                                case 2:
+                                    rate[i, k] += 1000;
+                                    break;
+                                case 3:
+                                    rate[i, k] += 10000;
+                                    break;
+                                case 4:
+                                    rate[i, k] += 500000;
+                                    break;
+                            }
+                        }
+
+                        if (bigDiagonalList.Contains(oppositeSymbol))
+                        {
+                            switch (bigDiagonalList.Where(x => x.Equals(oppositeSymbol)).Count())
+                            {
+                                case 1:
+                                    rate[i, k] += 500;
+                                    break;
+                                case 2:
+                                    rate[i, k] += 5000;
+                                    break;
+                                case 3:
+                                    rate[i, k] += 50000;
+                                    break;
+                                case 4:
+                                    rate[i, k] += 100000;
+                                    break;
+                            }
+                        }
+                        rate[i, k] += 1;
+                    }
+                }
+            }
             return rate;
         }
 
