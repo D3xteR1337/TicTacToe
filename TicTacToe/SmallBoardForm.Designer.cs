@@ -216,7 +216,7 @@ namespace TicTacToe
             this.Name = "SmallBoardForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "3x3";
-            this.Shown += new System.EventHandler(this.SmallBoardForm_Shown);
+            this.Activated += new System.EventHandler(this.SmallBoardForm_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 

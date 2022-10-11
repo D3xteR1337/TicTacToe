@@ -15,7 +15,7 @@ namespace TicTacToe
     public partial class SmallBoardForm : Form
     {
         //какой игрок/бот ходит
-        int currentPlayerMove = 1;
+        public int currentPlayerMove;
         int moveCounter = 0;
         Random random = new Random();
         public SmallBoardForm()
@@ -46,7 +46,7 @@ namespace TicTacToe
             if (currentGameType == gameTypes["playerVsBot"])
             {
                 if (currentPlayerMove == 2)
-                {   
+                {
                     position.Text = "O";
                     IsOver();
                     BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
@@ -172,14 +172,23 @@ namespace TicTacToe
             }
         }
 
-        private void SmallBoardForm_Shown(object sender, EventArgs e)
+        private void SmallBoardForm_Activated(object sender, EventArgs e)
         {
-            if (currentGameType == gameTypes["botVsBot"])
+            Task.Delay(random.Next(1000)).GetAwaiter().GetResult();
+            if (currentPlayerMove == 2 && gameTypes["playerVsBot"] == currentGameType)
             {
-                while (!IsOver())
+                BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
+            }
+            else if (gameTypes["botVsBot"] == currentGameType)
+            {
+                while (moveCounter++ < 5)
                 {
+                    Task.Delay(random.Next(500, 1000)).GetAwaiter().GetResult();
                     BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
+                    IsOver();
+                    Task.Delay(random.Next(500, 1000)).GetAwaiter().GetResult();
                     BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                    IsOver();
                 }
             }
         }
