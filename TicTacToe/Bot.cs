@@ -46,6 +46,7 @@ namespace TicTacToe
 
         public static byte[] getBotMove(byte[,] gameBoard, int currSymbol)
         {
+            Random randSameRateCellSelector = new Random();
             var pos = new byte[2];
             var maxValue = 0;
             var rateTable = new int[gameBoard.GetLength(0), gameBoard.GetLength(1)];
@@ -60,12 +61,19 @@ namespace TicTacToe
                 {
                     if (rateTable[i, k] > maxValue)
                     {
+                        
                         pos[0] = (byte)i;
                         pos[1] = (byte)k;
                         maxValue = rateTable[i, k];
                     }
+                    if (rateTable[i, k] == maxValue && randSameRateCellSelector.Next(10) > 5)
+                    {
+                        pos[0] = (byte)i;
+                        pos[1] = (byte)k;
+                    }
                 }
             }
+
 
             return pos;
         }
