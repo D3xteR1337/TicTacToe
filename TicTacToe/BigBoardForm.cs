@@ -23,92 +23,95 @@ namespace TicTacToe
             InitializeComponent();
         }
 
-        private void pos11_Click(object sender, EventArgs e) { placeMarker(pos11); pos11.Enabled = false; }
+        private void pos11_Click(object sender, EventArgs e) { placeMarker(pos11); }
 
-        private void pos12_Click(object sender, EventArgs e) { placeMarker(pos12); pos12.Enabled = false; }
+        private void pos12_Click(object sender, EventArgs e) { placeMarker(pos12); }
 
-        private void pos13_Click(object sender, EventArgs e) { placeMarker(pos13); pos13.Enabled = false; }
+        private void pos13_Click(object sender, EventArgs e) { placeMarker(pos13); }
 
-        private void pos14_Click(object sender, EventArgs e) { placeMarker(pos14); pos14.Enabled = false; }
+        private void pos14_Click(object sender, EventArgs e) { placeMarker(pos14); }
 
-        private void pos15_Click(object sender, EventArgs e) { placeMarker(pos15); pos15.Enabled = false; }
+        private void pos15_Click(object sender, EventArgs e) { placeMarker(pos15); }
 
-        private void pos21_Click(object sender, EventArgs e) { placeMarker(pos21); pos21.Enabled = false; }
+        private void pos21_Click(object sender, EventArgs e) { placeMarker(pos21); }
 
-        private void pos22_Click(object sender, EventArgs e) { placeMarker(pos22); pos22.Enabled = false; }
+        private void pos22_Click(object sender, EventArgs e) { placeMarker(pos22); }
 
-        private void pos23_Click(object sender, EventArgs e) { placeMarker(pos23); pos23.Enabled = false; }
+        private void pos23_Click(object sender, EventArgs e) { placeMarker(pos23); }
 
-        private void pos24_Click(object sender, EventArgs e) { placeMarker(pos24); pos24.Enabled = false; }
+        private void pos24_Click(object sender, EventArgs e) { placeMarker(pos24); }
 
-        private void pos25_Click(object sender, EventArgs e) { placeMarker(pos25); pos25.Enabled = false; }
+        private void pos25_Click(object sender, EventArgs e) { placeMarker(pos25); }
 
-        private void pos31_Click(object sender, EventArgs e) { placeMarker(pos31); pos31.Enabled = false; }
+        private void pos31_Click(object sender, EventArgs e) { placeMarker(pos31); }
 
-        private void pos32_Click(object sender, EventArgs e) { placeMarker(pos32); pos32.Enabled = false; }
+        private void pos32_Click(object sender, EventArgs e) { placeMarker(pos32); }
 
-        private void pos33_Click(object sender, EventArgs e) { placeMarker(pos33); pos33.Enabled = false; }
+        private void pos33_Click(object sender, EventArgs e) { placeMarker(pos33); }
 
-        private void pos34_Click(object sender, EventArgs e) { placeMarker(pos34); pos34.Enabled = false; }
+        private void pos34_Click(object sender, EventArgs e) { placeMarker(pos34); }
 
-        private void pos35_Click(object sender, EventArgs e) { placeMarker(pos35); pos35.Enabled = false; }
+        private void pos35_Click(object sender, EventArgs e) { placeMarker(pos35); }
 
-        private void pos41_Click(object sender, EventArgs e) { placeMarker(pos41); pos41.Enabled = false; }
+        private void pos41_Click(object sender, EventArgs e) { placeMarker(pos41); }
 
-        private void pos42_Click(object sender, EventArgs e) { placeMarker(pos42); pos42.Enabled = false; }
+        private void pos42_Click(object sender, EventArgs e) { placeMarker(pos42); }
 
-        private void pos43_Click(object sender, EventArgs e) { placeMarker(pos43); pos43.Enabled = false; }
+        private void pos43_Click(object sender, EventArgs e) { placeMarker(pos43); }
 
-        private void pos44_Click(object sender, EventArgs e) { placeMarker(pos44); pos44.Enabled = false; }
+        private void pos44_Click(object sender, EventArgs e) { placeMarker(pos44); }
 
-        private void pos45_Click(object sender, EventArgs e) { placeMarker(pos45); pos45.Enabled = false; }
+        private void pos45_Click(object sender, EventArgs e) { placeMarker(pos45); }
 
-        private void pos51_Click(object sender, EventArgs e) { placeMarker(pos51); pos51.Enabled = false; }
+        private void pos51_Click(object sender, EventArgs e) { placeMarker(pos51); }
 
-        private void pos52_Click(object sender, EventArgs e) { placeMarker(pos52); pos52.Enabled = false; }
+        private void pos52_Click(object sender, EventArgs e) { placeMarker(pos52); }
 
-        private void pos53_Click(object sender, EventArgs e) { placeMarker(pos53); pos53.Enabled = false; }
+        private void pos53_Click(object sender, EventArgs e) { placeMarker(pos53); }
 
-        private void pos54_Click(object sender, EventArgs e) { placeMarker(pos54); pos54.Enabled = false; }
+        private void pos54_Click(object sender, EventArgs e) { placeMarker(pos54); }
 
-        private void pos55_Click(object sender, EventArgs e) { placeMarker(pos55); pos55.Enabled = false; }
+        private void pos55_Click(object sender, EventArgs e) { placeMarker(pos55); }
 
 
         public void placeMarker(Label position)
         {
-            if (currentGameType == gameTypes["playerVsBot"])
+            if (position.Text == " ")
             {
-                if (currentPlayerMove == 2)
+                if (currentGameType == gameTypes["playerVsBot"])
                 {
-                    position.Text = "O";
-                    IsOver();
-                    BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
-                    IsOver();
-                }
-                else
-                {
-                    position.Text = "X";
-                    IsOver();
-                    if (moveCounter++ < 12)
+                    if (currentPlayerMove == 2)
                     {
-                        BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                        position.Text = "O";
+                        IsOver();
+                        BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
                         IsOver();
                     }
+                    else
+                    {
+                        position.Text = "X";
+                        IsOver();
+                        if (moveCounter++ < 12)
+                        {
+                            BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                            IsOver();
+                        }
+                    }
                 }
-            }
-            else if (currentGameType == gameTypes["playerVsPlayer"])
-            {
-                if (currentPlayerMove == 1)
+                else if (currentGameType == gameTypes["playerVsPlayer"])
                 {
-                    position.Text = "X";
-                    IsOver();
-                    currentPlayerMove = 2;
-                }
-                else
-                {
-                    position.Text = "O";
-                    IsOver();
-                    currentPlayerMove = 1;
+                    if (currentPlayerMove == 1)
+                    {
+                        position.Text = "X";
+                        IsOver();
+                        currentPlayerMove = 2;
+                    }
+                    else
+                    {
+                        position.Text = "O";
+                        IsOver();
+                        currentPlayerMove = 1;
+                    }
                 }
             }
         }

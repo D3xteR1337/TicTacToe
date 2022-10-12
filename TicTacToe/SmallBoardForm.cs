@@ -22,59 +22,62 @@ namespace TicTacToe
             InitializeComponent();
         }
 
-        private void pos11_Click(object sender, EventArgs e) { placeMarker(pos11); pos11.Enabled = false; }
+        private void pos11_Click(object sender, EventArgs e) { placeMarker(pos11); }
 
-        private void pos12_Click(object sender, EventArgs e) { placeMarker(pos12); pos12.Enabled = false; }
+        private void pos12_Click(object sender, EventArgs e) { placeMarker(pos12); }
 
-        private void pos13_Click(object sender, EventArgs e) { placeMarker(pos13); pos13.Enabled = false; }
+        private void pos13_Click(object sender, EventArgs e) { placeMarker(pos13); }
 
-        private void pos21_Click(object sender, EventArgs e) { placeMarker(pos21); pos21.Enabled = false; }
+        private void pos21_Click(object sender, EventArgs e) { placeMarker(pos21); }
 
-        private void pos22_Click(object sender, EventArgs e) { placeMarker(pos22); pos22.Enabled = false; }
+        private void pos22_Click(object sender, EventArgs e) { placeMarker(pos22); }
 
-        private void pos23_Click(object sender, EventArgs e) { placeMarker(pos23); pos23.Enabled = false; }
+        private void pos23_Click(object sender, EventArgs e) { placeMarker(pos23); }
 
-        private void pos31_Click(object sender, EventArgs e) { placeMarker(pos31); pos31.Enabled = false; }
+        private void pos31_Click(object sender, EventArgs e) { placeMarker(pos31); }
 
-        private void pos32_Click(object sender, EventArgs e) { placeMarker(pos32); pos32.Enabled = false; }
+        private void pos32_Click(object sender, EventArgs e) { placeMarker(pos32); }
 
-        private void pos33_Click(object sender, EventArgs e) { placeMarker(pos33); pos33.Enabled = false; }
+        private void pos33_Click(object sender, EventArgs e) { placeMarker(pos33); }
 
         public void placeMarker(Label position)
         {
-            if (currentGameType == gameTypes["playerVsBot"])
+            if (position.Text == " ")
             {
-                if (currentPlayerMove == 2)
+                if (currentGameType == gameTypes["playerVsBot"])
                 {
-                    position.Text = "O";
-                    IsOver();
-                    BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
-                    IsOver();
-                }
-                else
-                {
-                    position.Text = "X";
-                    IsOver();
-                    if (moveCounter++ < 4)
+                    if (currentPlayerMove == 2)
                     {
-                        BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                        position.Text = "O";
+                        IsOver();
+                        BotMakeMove(Bot.getBotMove(getGameBoard(), 1), "X");
                         IsOver();
                     }
+                    else
+                    {
+                        position.Text = "X";
+                        IsOver();
+                        if (moveCounter++ < 4)
+                        {
+                            BotMakeMove(Bot.getBotMove(getGameBoard(), 2), "O");
+                            IsOver();
+                        }
+                    }
                 }
-            }
-            else if (currentGameType == gameTypes["playerVsPlayer"])
-            {
-                if (currentPlayerMove == 1)
+                else if (currentGameType == gameTypes["playerVsPlayer"])
                 {
-                    position.Text = "X";
-                    IsOver();
-                    currentPlayerMove = 2;
-                }
-                else
-                {
-                    position.Text = "O";
-                    IsOver();
-                    currentPlayerMove = 1;
+                    if (currentPlayerMove == 1)
+                    {
+                        position.Text = "X";
+                        IsOver();
+                        currentPlayerMove = 2;
+                    }
+                    else
+                    {
+                        position.Text = "O";
+                        IsOver();
+                        currentPlayerMove = 1;
+                    }
                 }
             }
         }
